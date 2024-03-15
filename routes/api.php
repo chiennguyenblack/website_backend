@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //Route::middleware(['throttle:60,10', 'ipcheck'])->group(function () {
     Route::post('/login', "App\Http\Controllers\LoginController@loginOld");
     Route::post('/login131', "App\Http\Controllers\LoginController@index");
+    Route::post('/saveImg', "App\Http\Controllers\SaveImgController@index");
     Route::post('/login/validatetfa', "App\Http\Controllers\LoginController@validatetfa");
     Route::post('/register', "App\Http\Controllers\RegisterController@index");
     Route::post('/serverlist', "App\Http\Controllers\ServerListController@index");
