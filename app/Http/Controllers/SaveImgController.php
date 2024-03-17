@@ -9,12 +9,17 @@ class SaveImgController extends \App\Http\BaseController
     public function index(SaveImgRequest $req)
     {
         $img = $req->imgPre.$req->imgNex;
-        // Log::info('Res img111------- '.$img);
-        // return $img;
         $imageData = base64_decode($img);
-        $filename = $req->username. '_' . date("Y-m-d"). '_' . date("H:i:s") . '.png';
-        $path = public_path('img/' . $filename);
-        file_put_contents($path, $imageData);
+        $fileName = $req->username. '_' . date("Y-m-d"). '_' . date("H-i-s") . '.png';
+        // Log::info('Res img----');
+        $filePath = 'D:/website_backend/public/img/'.$fileName;
+        $fileHandle = fopen($filePath, 'w');
+        if ($fileHandle !== false) {
+            fwrite($fileHandle, $imageData);
+            fclose($fileHandle);
+            $result = file_put_contents($filePath, $imageData);
+        }
+        
         return $this->success('Thành công');
     }
 }
