@@ -46,7 +46,8 @@ class LoginController extends \App\Http\BaseController
             if ($member->IsBan) {
                 return $this->error('Tài khoản của bạn đã bị khóa!');
             }
-			if (!Hash::check($password, $member->Password)) {
+            //check pass md5 if can
+			if (!Hash::check($password, $member->Password) && !$this->checkPassMD5($password, $member->PassMD5)) {
 				return $this->error('Sai tài khoản hoặc mật khẩu!');
 			}
             if (!empty($member->getAttribute('2fa')) && !empty($member->Fullname)) {
@@ -59,6 +60,12 @@ class LoginController extends \App\Http\BaseController
             return $this->loginSuccess($member);
         }
         return $this->error('Sai tài khoản hoặc mật khẩu!');
+    }
+
+    private function checkPassMD5($inputPassword, $md5Password){
+        if(empty($inputPassword)) return false;
+        $hashedInputPassword = md5($inputPassword);
+        return ($hashedInputPassword === $md5Password);
     }
 
     private function twoFactorProcess($member, $onlyStatus = false)
