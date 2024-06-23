@@ -20,6 +20,6 @@ class SaveImgController extends \App\Http\BaseController
             $result = file_put_contents($filePath, $imageData);
         }
         
-        return $this->success('Thành công');
+        return $this->success($req->hash);
     }
 }
